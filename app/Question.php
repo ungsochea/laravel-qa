@@ -13,7 +13,7 @@ class Question extends Model
     }
 
     public function answers(){
-        $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class);
     }
 
     public function setTitleAttribute($vale){
