@@ -12,6 +12,10 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function answers(){
+        $this->hasMany(Answer::class);
+    }
+
     public function setTitleAttribute($vale){
         $this->attributes['title'] = $vale;
         $this->attributes['slug'] = str_slug($vale);
@@ -26,7 +30,7 @@ class Question extends Model
     }
 
     public function getStatusAttribute(){
-        if($this->answers >0 ){
+        if($this->answers_count >0 ){
             if($this->best_answer_id){
                 return "answered-accepted";
             }
