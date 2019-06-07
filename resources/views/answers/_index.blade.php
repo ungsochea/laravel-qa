@@ -23,7 +23,7 @@
                                         @can('update',$answer)
                                             <a href="{{ route('questions.answers.edit',[$question->id,$answer->id]) }}" class="btn btn-sm btn-outline-info">Edit</a>
                                         @endcan
-                                        @can('delete',$question)
+                                        @can('delete',$answer)
                                         <form class="form-delete" action="{{ route('questions.answers.destroy',[$question->id,$answer->id]) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
