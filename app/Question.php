@@ -23,6 +23,11 @@ class Question extends Model
         $this->attributes['slug'] = str_slug($vale);
     }
 
+    public function setBodyAttribute($vale)
+    {
+        $this->attributes['body'] = clean($vale);
+    }
+
     public function getUrlAttribute(){
         return route("questions.show",$this->slug);
     }
@@ -41,9 +46,7 @@ class Question extends Model
         return "unanswered";
     }
 
-    public function getBodyHtmlAttribute(){
-        return \Parsedown::instance()->text($this->body);
-    }
+   
 
     public function acceptBestAnswer(Answer $answer){
         $this->best_answer_id = $answer->id;
@@ -68,5 +71,25 @@ class Question extends Model
         return $this->favorites->count();
     }
 
+    public function getBodyHtmlAttribute()
+    {
+        return clean($this->bodyHtml());
+    }
+
+
+    private function bodyHtml()
+    {
+        return \Parsedown::instance()->text($this->body);
+    }
+    
+    public function getExcerptAttribute()
+    {
+        return $this->excerpt(250);
+    }
+
+    public function excerpt($length)
+    {
+        return str_limit(strip_tags($this->body_html),$length);
+    }
     
 }
